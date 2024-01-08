@@ -4,18 +4,23 @@ CREATE TABLE Candidates (
     party_affiliation TEXT,
     position TEXT
 );
+
 ALTER TABLE Candidates
 DROP CONSTRAINT IF EXISTS Candidates_pkey;
+
 ALTER TABLE Candidates
 ADD PRIMARY KEY (candidate_id);
+
 CREATE TABLE Votes (
     voter_id INTEGER,
     candidate_id INTEGER,
     PRIMARY KEY (voter_id, candidate_id)
 );
+
 ALTER TABLE Votes
 ADD CONSTRAINT FK_Candidates
 FOREIGN KEY (candidate_id) REFERENCES Candidates(candidate_id);
+
 CREATE TABLE Voters (
     voter_id INTEGER PRIMARY KEY,
     name TEXT,
@@ -23,8 +28,10 @@ CREATE TABLE Voters (
     voted_for INTEGER,
     FOREIGN KEY (voted_for) REFERENCES Candidates(candidate_id)
 );
+
 ALTER TABLE Voters
 DROP CONSTRAINT IF EXISTS Voters_voted_for_fkey;
+
 ALTER TABLE Voters
 ADD CONSTRAINT FK_Candidates
 FOREIGN KEY (voted_for) REFERENCES Candidates(candidate_id);
