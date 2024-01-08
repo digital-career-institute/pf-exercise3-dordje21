@@ -1,3 +1,35 @@
+CREATE TABLE Candidates (
+    candidate_id INTEGER PRIMARY KEY,
+    name TEXT,
+    party_affiliation TEXT,
+    position TEXT
+);
+ALTER TABLE Candidates
+DROP CONSTRAINT IF EXISTS Candidates_pkey;
+ALTER TABLE Candidates
+ADD PRIMARY KEY (candidate_id);
+CREATE TABLE Votes (
+    voter_id INTEGER,
+    candidate_id INTEGER,
+    PRIMARY KEY (voter_id, candidate_id)
+);
+ALTER TABLE Votes
+ADD CONSTRAINT FK_Candidates
+FOREIGN KEY (candidate_id) REFERENCES Candidates(candidate_id);
+CREATE TABLE Voters (
+    voter_id INTEGER PRIMARY KEY,
+    name TEXT,
+    age INTEGER,
+    voted_for INTEGER,
+    FOREIGN KEY (voted_for) REFERENCES Candidates(candidate_id)
+);
+ALTER TABLE Voters
+DROP CONSTRAINT IF EXISTS Voters_voted_for_fkey;
+ALTER TABLE Voters
+ADD CONSTRAINT FK_Candidates
+FOREIGN KEY (voted_for) REFERENCES Candidates(candidate_id);
+
+
 Assignment: Understanding Primary Keys and Foreign Keys in an Election Database
 Overview:
 In this assignment, you will be working with a database related to an election. You'll apply your knowledge of primary keys and foreign keys by creating tables, manipulating data, and establishing relationships between them.
